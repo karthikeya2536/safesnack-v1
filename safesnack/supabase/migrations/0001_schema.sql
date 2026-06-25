@@ -1,0 +1,42 @@
+create type role as enum ('CUSTOMER','STAFF','ADMIN');
+create type order_status as enum ('PENDING_PAYMENT','PAID','PROCESSING','SHIPPED','OUT_FOR_DELIVERY','DELIVERED','CANCELLED','REFUNDED');
+create type img_type as enum ('PRIMARY','HOVER','GALLERY','LIFESTYLE','NUTRITION_LABEL','INGREDIENT');
+create type rel_type as enum ('RELATED','FREQUENTLY_BOUGHT_TOGETHER');
+create type coupon_type as enum ('PERCENT','FLAT');
+create type mv_type as enum ('IN','OUT','ADJUST','SALE','EXPIRED');
+create type evt_type as enum ('PRODUCT_VIEW','ADD_TO_CART','BEGIN_CHECKOUT','PURCHASE','SEARCH');
+
+create table profile (id uuid primary key references auth.users on delete cascade, name text, phone text, role role not null default 'CUSTOMER', created_at timestamptz default now());
+create table address (id uuid primary key default gen_random_uuid(), user_id uuid references profile(id) on delete cascade, line1 text, line2 text, city text, pincode text, is_default bool default false);
+create table brand (id uuid primary key default gen_random_uuid(), name text not null, slug text unique not null, logo_url text, is_house_brand bool default false);
+create table category (id uuid primary key default gen_random_uuid(), name text not null, slug text unique not null);
+create table product (id uuid primary key default gen_random_uuid(), name text not null, slug text unique not null, description text, brand_id uuid references brand(id), category_id uuid references category(id), dietary_tags text[] default '{}', ingredients text, nutrition jsonb, benefits text, story text, featured_ingredients text, serving_suggestions text, is_active bool default true, rating numeric default 0, created_at timestamptz default now());
+create table product_image (id uuid primary key default gen_random_uuid(), product_id uuid references product(id) on delete cascade, url text not null, type img_type not null, sort_order int default 0);
+create table product_relationship (id uuid primary key default gen_random_uuid(), product_id uuid references product(id) on delete cascade, related_product_id uuid references product(id) on delete cascade, type rel_type not null);
+create table variant (id uuid primary key default gen_random_uuid(), product_id uuid references product(id) on delete cascade, label text not null, price numeric not null, compare_at_price numeric, sku text unique);
+create table bundle (id uuid primary key default gen_random_uuid(), name text not null, slug text unique not null, description text, price numeric not null, is_active bool default true);
+create table bundle_item (id uuid primary key default gen_random_uuid(), bundle_id uuid references bundle(id) on delete cascade, variant_id uuid references variant(id), qty int not null default 1);
+create table coupon (id uuid primary key default gen_random_uuid(), code text unique not null, type coupon_type not null, value numeric not null, min_order numeric default 0, max_discount numeric, usage_limit int, per_user_limit int, starts_at timestamptz, expires_at timestamptz, active bool default true);
+create table reward_point_ledger (id uuid primary key default gen_random_uuid(), user_id uuid references profile(id) on delete cascade, delta int not null, reason text, order_id uuid, balance int not null, created_at timestamptz default now());
+create table referral (id uuid primary key default gen_random_uuid(), referrer_id uuid references profile(id), code text unique not null, referee_id uuid references profile(id), status text default 'PENDING', reward_granted bool default false);
+create table batch (id uuid primary key default gen_random_uuid(), variant_id uuid references variant(id) on delete cascade, batch_number text, mfg_date date, expiry_date date, quantity int not null default 0);
+create table inventory_movement (id uuid primary key default gen_random_uuid(), variant_id uuid references variant(id), batch_id uuid references batch(id), type mv_type not null, qty int not null, ref text, staff_id uuid references profile(id), created_at timestamptz default now());
+create table delivery_zone (id uuid primary key default gen_random_uuid(), area text, pincode text, delivery_fee numeric default 0, min_order numeric default 0, eta_minutes int);
+create table "order" (id uuid primary key default gen_random_uuid(), user_id uuid references profile(id), status order_status not null default 'PENDING_PAYMENT', subtotal numeric not null, discount numeric default 0, delivery_fee numeric default 0, total numeric not null, coupon_id uuid references coupon(id), delivery_zone_id uuid references delivery_zone(id), address jsonb, razorpay_order_id text, payment_id text, payment_status text, points_earned int default 0, points_redeemed int default 0, created_at timestamptz default now());
+create table order_item (id uuid primary key default gen_random_uuid(), order_id uuid references "order"(id) on delete cascade, variant_id uuid references variant(id), bundle_id uuid references bundle(id), qty int not null, unit_price numeric not null, line_total numeric not null);
+create table review (id uuid primary key default gen_random_uuid(), product_id uuid references product(id) on delete cascade, user_id uuid references profile(id), rating int not null check (rating between 1 and 5), title text, body text, verified_purchase bool default false, status text default 'PUBLISHED', created_at timestamptz default now());
+create table wishlist_item (id uuid primary key default gen_random_uuid(), user_id uuid references profile(id) on delete cascade, product_id uuid references product(id) on delete cascade, unique(user_id, product_id));
+create table notification (id uuid primary key default gen_random_uuid(), user_id uuid references profile(id) on delete cascade, type text, title text, body text, read bool default false, created_at timestamptz default now());
+create table analytics_event (id uuid primary key default gen_random_uuid(), type evt_type not null, user_id uuid, session_id text, product_id uuid, value numeric, created_at timestamptz default now());
+create table search_query (id uuid primary key default gen_random_uuid(), query text not null, results_count int, user_id uuid, session_id text, created_at timestamptz default now());
+create table homepage_content (id int primary key default 1, hero_title text, hero_subtitle text, hero_cta text, featured_product_ids uuid[] default '{}', featured_bundle_ids uuid[] default '{}', banners jsonb default '[]', lifestyle jsonb default '{}', check (id = 1));
+-- placeholders (schema only, feature not built now)
+create table subscription_plan (id uuid primary key default gen_random_uuid(), name text, interval text, price numeric, items jsonb);
+create table subscription_order (id uuid primary key default gen_random_uuid(), plan_id uuid references subscription_plan(id), user_id uuid references profile(id), next_delivery_at timestamptz, status text);
+
+create index on product (category_id);
+create index on product (brand_id);
+create index on variant (product_id);
+create index on order_item (order_id);
+create index on "order" (user_id);
+create index on review (product_id);
