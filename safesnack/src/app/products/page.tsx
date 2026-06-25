@@ -3,6 +3,8 @@ import { getCategories, getProducts } from "@/lib/queries";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { EmptyState } from "@/components/ui/EmptyState";
 
+export const dynamic = "force-dynamic";
+
 const TAGS = ["sugar-free", "keto", "diabetic", "vegan"];
 
 export default async function ProductsPage({ searchParams }: { searchParams: Promise<{ category?: string; tag?: string }> }) {

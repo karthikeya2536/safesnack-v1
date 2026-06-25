@@ -6,6 +6,8 @@ import { ProductCard } from "@/components/ui/ProductCard";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
+export const dynamic = "force-dynamic";
+
 const TRUST = ["Sugar-free choices", "Diabetic-friendly range", "Ingredient-first curation", "Hyderabad delivery"];
 const DIETS = [
   { title: "Diabetic-friendly", body: "Explore products selected for people making more careful sugar choices.", href: "/products?tag=diabetic", tone: "bg-[#E9EFFB]" },

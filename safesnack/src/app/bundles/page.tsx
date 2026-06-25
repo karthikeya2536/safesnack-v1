@@ -4,6 +4,7 @@ import { inr } from "@/lib/format";
 import { EmptyState } from "@/components/ui/EmptyState";
 
 export const metadata = { title: "Healthy Bundles | SafeSnack" };
+export const dynamic = "force-dynamic";
 
 export default async function BundlesPage() {
   const bundles = await getBundles();
