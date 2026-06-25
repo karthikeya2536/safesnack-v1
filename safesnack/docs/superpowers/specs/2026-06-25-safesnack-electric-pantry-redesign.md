@@ -83,7 +83,96 @@ Behavior:
 
 Real product or brand photography is required. No fake product renders, decorative stock dashboards, or generated package labels.
 
-## 5. Global Experience
+## 5. Inspiration and Reference Framework
+
+The redesign will study and translate interaction and composition ideas from:
+
+- Awwwards food and drink winners, including image-led restaurant and packaged-food experiences
+- Apple product pages and store surfaces
+- 21st.dev component collections
+- Aceternity UI
+- Magic UI
+- UIverse
+- Other current, widely recognized product and commerce sites where the pattern fits SafeSnack
+
+These sources are references, not a visual identity. Components must be rebuilt inside the Electric Pantry token system and adapted to SafeSnack's content, accessibility needs, performance budget, and commerce flows.
+
+### What to learn from Apple
+
+- Product photography carries the page.
+- Each viewport has one dominant message.
+- Strong hierarchy comes from scale, spacing, and sequencing instead of decoration.
+- Calls to action remain simple and predictable.
+- Motion reveals product details and preserves spatial continuity.
+- Dense technical or nutritional information is progressively disclosed.
+- Every visual effect supports a product story.
+
+SafeSnack will borrow this discipline, not Apple's visual branding, device imagery, blue accent, or exact layouts.
+
+### What to learn from Awwwards food sites
+
+- Appetite appeal through oversized macro photography
+- Bold cropping and asymmetric compositions
+- Typography that interacts with products without obscuring them
+- Distinct section pacing
+- Memorable transitions between brand story and commerce
+- Strong packaging, texture, and ingredient details
+- Confident art direction specific to the food
+
+SafeSnack will avoid slow intro loaders, cursor replacement, inaccessible navigation, excessive scroll hijacking, heavy WebGL, and effects that delay shopping.
+
+### What to learn from component libraries
+
+Potential primitives to reinterpret:
+
+- Direction-aware button fills
+- Magnetic hover used on one primary desktop action only
+- Spotlight or glare response on featured product surfaces
+- Mask and blur reveals
+- Shared-layout transitions for selected filters and tabs
+- Animated accordions and mobile sheets
+- Border highlights for focus and active states
+- Skeleton shimmer for real loading states
+- Image comparison or before-and-after treatment for ingredient education
+- Scroll-aware navigation surface
+- Tactile quantity controls
+- Accessible toast, alert, and confirmation feedback
+
+No component is copied into the project unchanged. Each pattern must:
+
+1. Solve a real SafeSnack interaction need.
+2. Use Electric Pantry colors, type, radius, and spacing.
+3. Work with keyboard and touch.
+4. Respect reduced motion.
+5. Avoid adding a dependency when native CSS or existing React is sufficient.
+6. Preserve current application behavior.
+
+### Effects explicitly rejected
+
+- Generic aurora and purple mesh backgrounds
+- Border-beam decoration on every card
+- Neon outer glows
+- Infinite marquees used as filler
+- Particle explosions and confetti for ordinary actions
+- 3D tilt on every product
+- Text scramble that reduces readability
+- Animated grids unrelated to food or nutrition
+- Glassmorphism across the whole site
+- Demo-component aesthetics that compete with products
+
+### Reference-to-SafeSnack mapping
+
+- Apple product reveal becomes the homepage Snack Window reveal.
+- Apple comparison clarity becomes ingredient and dietary education.
+- Awwwards macro food imagery becomes product-first hero and bundle art direction.
+- Awwwards asymmetric layouts become offset Originals and story sections.
+- Aceternity and Magic UI spotlight concepts become restrained featured-card hover feedback.
+- 21st.dev transition patterns inform mobile navigation, filters, and page continuity.
+- UIverse button and input ideas inform tactile controls after accessibility and brand adaptation.
+
+The result must feel authored for SafeSnack. A visitor should not be able to identify which library a component came from.
+
+## 6. Global Experience
 
 ### Header
 
@@ -120,7 +209,7 @@ Real product or brand photography is required. No fake product renders, decorati
 - Semantic heading order retained or improved.
 - Motion and transparency fallbacks included.
 
-## 6. Public Storefront
+## 7. Public Storefront
 
 ### Homepage
 
@@ -170,7 +259,7 @@ Unverified claims and invented social engagement numbers must not be presented a
 - Bundles use broader image-led compositions.
 - Search gains a prominent accessible field, recent or helpful empty-state guidance using existing data only, and the shared product grid.
 
-## 7. Cart and Checkout
+## 8. Cart and Checkout
 
 ### Cart
 
@@ -188,7 +277,7 @@ Unverified claims and invented social engagement numbers must not be presented a
 - Inline errors stay adjacent to fields.
 - Loading and disabled states prevent duplicate submission.
 
-## 8. Authentication and Account
+## 9. Authentication and Account
 
 ### Authentication
 
@@ -205,7 +294,7 @@ Unverified claims and invented social engagement numbers must not be presented a
 - Address, profile, wishlist, and referral screens reuse the shared form and surface system.
 - Empty states always include a useful next action.
 
-## 9. Admin and Staff
+## 10. Admin and Staff
 
 Marketing styling will not be forced onto operational screens. Admin and staff use the same typography, color tokens, controls, and accessibility rules, but with lower variance and higher density.
 
@@ -217,7 +306,7 @@ Marketing styling will not be forced onto operational screens. Admin and staff u
 - Destructive actions remain clearly separated.
 - Staff order and inventory workflows prioritize speed and status clarity.
 
-## 10. Component System
+## 11. Component System
 
 Shared frontend components:
 
@@ -238,7 +327,7 @@ Shared frontend components:
 
 Components use semantic CSS tokens. No backend-aware abstraction is introduced.
 
-## 11. Motion and Interaction
+## 12. Motion and Interaction
 
 Motion communicates hierarchy, feedback, or state:
 
@@ -254,7 +343,17 @@ Motion communicates hierarchy, feedback, or state:
 
 No perpetual decorative animation, parallax-heavy scenes, WebGL, custom cursor, multiple marquees, or scroll hijacking.
 
-## 12. Responsive Rules
+Motion quality target:
+
+- Interaction feedback begins within 100ms.
+- Standard transitions use 180-280ms.
+- Larger composition changes may use up to 420ms.
+- Entrances use deceleration.
+- Exits are shorter than entrances.
+- Animations remain interruptible.
+- Nothing blocks clicking, scrolling, or purchasing.
+
+## 13. Responsive Rules
 
 - 375px is the minimum test width.
 - High-variance layouts collapse to one column below 768px.
@@ -265,7 +364,7 @@ No perpetual decorative animation, parallax-heavy scenes, WebGL, custom cursor, 
 - Forms use 16px minimum input text.
 - Landscape mobile remains operable.
 
-## 13. Preservation Contract
+## 14. Preservation Contract
 
 The implementation must preserve:
 
@@ -282,7 +381,7 @@ The implementation must preserve:
 
 Only presentation code and frontend-only interaction wrappers may change.
 
-## 14. Verification
+## 15. Verification
 
 Before completion:
 
@@ -296,8 +395,27 @@ Before completion:
 - Confirm no backend, API, database, query, or schema files changed
 - Confirm no broken routes or renamed analytics events
 - Check visible copy for unsupported claims and AI-style filler
+- Compare final screenshots against the approved Electric Pantry direction and reference principles
+- Confirm borrowed interaction patterns no longer resemble library defaults
+- Verify LCP, CLS, and interaction responsiveness are not harmed by visual effects
 
-## 15. Success Criteria
+## 16. Quality and Popularity Goal
+
+The ambition is an Apple-level standard of clarity, polish, memorability, and product storytelling. Design alone cannot guarantee popularity, traffic, awards, sales, or cultural reach. Those outcomes also require strong products, original photography, brand assets, marketing, SEO, distribution, and continuous testing.
+
+The UI contribution toward that goal is measurable:
+
+- A recognizable visual signature
+- Clear first-viewport value proposition
+- Fast route and interaction response
+- High-quality mobile experience
+- Strong product photography placement
+- Consistent interaction language
+- Accessible commerce flows
+- Shareable page moments without gimmicks
+- Technical performance suitable for search and conversion
+
+## 17. Success Criteria
 
 The redesign succeeds when:
 
