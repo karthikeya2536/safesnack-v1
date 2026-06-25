@@ -1,5 +1,6 @@
 import { publicClient } from "@/lib/supabase/public";
 import { cache } from "react";
+import { unstable_cache } from "next/cache";
 
 export type Variant = { id: string; label: string; price: number; compare_at_price: number | null; sku: string | null };
 export type ProductImage = { url: string; type: string; sort_order: number };
@@ -19,20 +20,40 @@ const PRODUCT_SELECT =
   "brand:brand_id(name,slug,is_house_brand),category:category_id(name,slug)," +
   "variant(id,label,price,compare_at_price,sku),product_image(url,type,sort_order)";
 
-export const getProducts = cache(async function getProducts(opts: { category?: string; tag?: string; sort?: string } = {}) {
+const fetchProducts = async (category?: string, tag?: string) => {
   const sb = publicClient();
   let q = sb.from("product").select(PRODUCT_SELECT).eq("is_active", true).order("name");
-  if (opts.tag) q = q.contains("dietary_tags", [opts.tag]);
+  if (tag) q = q.contains("dietary_tags", [tag]);
   const { data } = await q;
   let rows = (data ?? []) as unknown as Product[];
-  if (opts.category) rows = rows.filter((p) => p.category?.slug === opts.category);
+  if (category) rows = rows.filter((p) => p.category?.slug === category);
   return rows;
+};
+
+const getCachedProducts = unstable_cache(
+  async (category?: string, tag?: string) => fetchProducts(category, tag),
+  ["products-list"],
+  { revalidate: 60, tags: ["products"] }
+);
+
+export const getProducts = cache(async function getProducts(opts: { category?: string; tag?: string; sort?: string } = {}) {
+  return getCachedProducts(opts.category, opts.tag);
 });
 
-export const getProductBySlug = cache(async function getProductBySlug(slug: string) {
+const fetchProductBySlug = async (slug: string) => {
   const sb = publicClient();
   const { data } = await sb.from("product").select(PRODUCT_SELECT).eq("slug", slug).single();
   return (data as unknown as Product) ?? null;
+};
+
+const getCachedProductBySlug = unstable_cache(
+  async (slug: string) => fetchProductBySlug(slug),
+  ["product-by-slug"],
+  { revalidate: 60, tags: ["products"] }
+);
+
+export const getProductBySlug = cache(async function getProductBySlug(slug: string) {
+  return getCachedProductBySlug(slug);
 });
 
 export async function getOriginals() {
@@ -40,16 +61,36 @@ export async function getOriginals() {
   return all.filter((p) => p.brand?.is_house_brand);
 }
 
-export const getBundles = cache(async function getBundles() {
+const fetchBundles = async () => {
   const sb = publicClient();
   const { data } = await sb.from("bundle").select("id,name,slug,description,price").eq("is_active", true);
   return (data ?? []) as Bundle[];
+};
+
+const getCachedBundles = unstable_cache(
+  async () => fetchBundles(),
+  ["bundles-list"],
+  { revalidate: 60, tags: ["bundles"] }
+);
+
+export const getBundles = cache(async function getBundles() {
+  return getCachedBundles();
 });
 
-export const getCategories = cache(async function getCategories() {
+const fetchCategories = async () => {
   const sb = publicClient();
   const { data } = await sb.from("category").select("name,slug").order("name");
   return (data ?? []) as { name: string; slug: string }[];
+};
+
+const getCachedCategories = unstable_cache(
+  async () => fetchCategories(),
+  ["categories-list"],
+  { revalidate: 60, tags: ["categories"] }
+);
+
+export const getCategories = cache(async function getCategories() {
+  return getCachedCategories();
 });
 
 export const searchProducts = cache(async function searchProducts(term: string) {
@@ -81,3 +122,4 @@ export function primaryImage(p: Product) {
     null
   );
 }
+

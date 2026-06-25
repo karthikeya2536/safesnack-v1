@@ -6,7 +6,7 @@ import { ProductCard } from "@/components/ui/ProductCard";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 const TRUST = ["Sugar-free choices", "Diabetic-friendly range", "Ingredient-first curation", "Hyderabad delivery"];
 const DIETS = [
