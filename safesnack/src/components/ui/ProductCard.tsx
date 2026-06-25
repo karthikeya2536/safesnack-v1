@@ -1,18 +1,22 @@
 import Link from "next/link";
 import { inr } from "@/lib/format";
 import { priceFrom, primaryImage, type Product } from "@/lib/queries";
-
+import { ClientImage } from "@/components/ui/ClientImage";
 export function ProductCard({ product }: { product: Product }) {
   const img = primaryImage(product);
   return (
     <Link href={`/products/${product.slug}`} className="group block">
       <div className="aspect-square overflow-hidden rounded-2xl bg-sage/50">
         {img ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <ClientImage
             src={img}
             alt={product.name}
             className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+            fallback={
+              <div className="flex h-full items-center justify-center p-6 text-center font-serif text-forest/70">
+                {product.name}
+              </div>
+            }
           />
         ) : (
           <div className="flex h-full items-center justify-center p-6 text-center font-serif text-forest/70">

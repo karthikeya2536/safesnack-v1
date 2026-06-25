@@ -7,6 +7,7 @@ import { VariantPicker } from "@/components/ui/VariantPicker";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { WishlistButton } from "@/components/wishlist/WishlistButton";
 import { ReviewForm } from "@/components/reviews/ReviewForm";
+import { ClientImage } from "@/components/ui/ClientImage";
 import { inr } from "@/lib/format";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -53,8 +54,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <div>
           <div className="aspect-square overflow-hidden rounded-3xl bg-sage/50">
             {gallery[0] ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={gallery[0].url} alt={product.name} className="h-full w-full object-cover" />
+              <ClientImage
+                src={gallery[0].url}
+                alt={product.name}
+                className="h-full w-full object-cover"
+                fallback={<div className="flex h-full items-center justify-center font-serif text-2xl text-forest/60">{product.name}</div>}
+              />
             ) : (
               <div className="flex h-full items-center justify-center font-serif text-2xl text-forest/60">{product.name}</div>
             )}
@@ -62,8 +67,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           {gallery.length > 1 && (
             <div className="mt-4 grid grid-cols-4 gap-3">
               {gallery.slice(1, 5).map((g, i) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img key={i} src={g.url} alt="" className="aspect-square rounded-xl object-cover" />
+                <ClientImage
+                  key={i}
+                  src={g.url}
+                  alt=""
+                  className="aspect-square rounded-xl object-cover"
+                  fallback={<div className="aspect-square rounded-xl bg-sage/50" />}
+                />
               ))}
             </div>
           )}
