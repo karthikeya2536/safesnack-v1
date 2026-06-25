@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getPointsBalance } from "@/lib/points";
 import { CheckoutClient } from "@/components/checkout/CheckoutClient";
 
-export const metadata = { title: "Checkout — SafeSnack" };
+export const metadata = { title: "Checkout | SafeSnack" };
 
 export default async function CheckoutPage() {
   const sb = await createClient();
@@ -17,9 +17,12 @@ export default async function CheckoutPage() {
   ]);
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="font-serif text-4xl text-forest">Checkout</h1>
-      <CheckoutClient addresses={addresses ?? []} zones={zones ?? []} pointsBalance={pointsBalance} />
+    <main className="ep-page">
+      <div>
+        <p className="ep-kicker">Secure checkout</p>
+        <h1 className="ep-title mt-4">Almost snack time.</h1>
+        <CheckoutClient addresses={addresses ?? []} zones={zones ?? []} pointsBalance={pointsBalance} />
+      </div>
     </main>
   );
 }

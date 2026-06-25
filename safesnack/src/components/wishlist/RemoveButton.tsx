@@ -13,7 +13,7 @@ export function RemoveWishlist({ productId }: { productId: string }) {
         if (user) await sb.from("wishlist_item").delete().eq("user_id", user.id).eq("product_id", productId);
         router.refresh();
       }}
-      className="text-xs text-clay hover:underline"
+      className="min-h-11 rounded-full px-4 text-sm font-bold text-clay transition hover:bg-clay/10"
     >
       Remove
     </button>

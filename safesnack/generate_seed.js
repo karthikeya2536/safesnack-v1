@@ -97,18 +97,18 @@ const rawData = {
 const stockImages = {
   "BREADS AND BAKERY": "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1000&auto=format&fit=crop",
   "COOKIES": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?q=80&w=1000&auto=format&fit=crop",
-  "DARK CHOCOLATES": "https://images.unsplash.com/photo-1548883354-94cb862d64a2?q=80&w=1000&auto=format&fit=crop",
-  "HEALTHY CHIPS": "https://images.unsplash.com/photo-1566478989037-e924e525bb13?q=80&w=1000&auto=format&fit=crop",
-  "HEALTHY SNACKS": "https://images.unsplash.com/photo-1600180766465-4f40f04c622a?q=80&w=1000&auto=format&fit=crop",
-  "ICE CREAM": "https://images.unsplash.com/photo-1570197781417-0a5237505ed6?q=80&w=1000&auto=format&fit=crop",
-  "KETCHUP": "https://images.unsplash.com/photo-1528751505234-45330e2ea854?q=80&w=1000&auto=format&fit=crop",
-  "MILK CHOCOLATES": "https://images.unsplash.com/photo-1614088656111-e40636d10c26?q=80&w=1000&auto=format&fit=crop",
-  "NATURAL CHEWING GUMS": "https://images.unsplash.com/photo-1582260384405-b0b92d6e355c?q=80&w=1000&auto=format&fit=crop",
-  "NOODLES": "https://images.unsplash.com/photo-1612929633738-8fe01f7467c1?q=80&w=1000&auto=format&fit=crop",
+  "DARK CHOCOLATES": "https://images.unsplash.com/photo-1511381939415-e44015466834?q=80&w=1000&auto=format&fit=crop",
+  "HEALTHY CHIPS": "https://images.unsplash.com/photo-1560008511-11c63416e52d?q=80&w=1000&auto=format&fit=crop",
+  "HEALTHY SNACKS": "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?q=80&w=1000&auto=format&fit=crop",
+  "ICE CREAM": "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?q=80&w=1000&auto=format&fit=crop",
+  "KETCHUP": "https://images.unsplash.com/photo-1585238342024-78d387f4a707?q=80&w=1000&auto=format&fit=crop",
+  "MILK CHOCOLATES": "https://images.unsplash.com/photo-1511381939415-e44015466834?q=80&w=1000&auto=format&fit=crop",
+  "NATURAL CHEWING GUMS": "https://images.unsplash.com/photo-1559181567-c3190ca9959b?q=80&w=1000&auto=format&fit=crop",
+  "NOODLES": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=1000&auto=format&fit=crop",
   "PASTAS": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=1000&auto=format&fit=crop",
-  "PROTEIN MILKSHAKES": "https://images.unsplash.com/photo-1577805947697-89e18249d767?q=80&w=1000&auto=format&fit=crop",
+  "PROTEIN MILKSHAKES": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?q=80&w=1000&auto=format&fit=crop",
   "PROTEIN OATS": "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?q=80&w=1000&auto=format&fit=crop",
-  "SUGAR FREE POPS": "https://images.unsplash.com/photo-1518114093931-e175d713c774?q=80&w=1000&auto=format&fit=crop",
+  "SUGAR FREE POPS": "https://images.unsplash.com/photo-1534080564583-6be75777b70a?q=80&w=1000&auto=format&fit=crop",
   "DEFAULT": "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?q=80&w=1000&auto=format&fit=crop"
 };
 

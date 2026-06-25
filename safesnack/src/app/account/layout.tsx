@@ -17,16 +17,19 @@ export default async function AccountLayout({ children }: { children: React.Reac
   if (!user) redirect("/login?next=/account");
 
   return (
-    <main className="mx-auto max-w-6xl px-6 py-16">
-      <h1 className="font-serif text-4xl text-forest">My Account</h1>
-      <div className="mt-10 grid gap-10 md:grid-cols-[200px_1fr]">
-        <aside className="flex flex-col gap-3 text-sm">
+    <main className="ep-page">
+      <div>
+      <p className="ep-kicker">Customer space</p>
+      <h1 className="mt-3 text-5xl font-bold tracking-[-.06em]">My account</h1>
+      <div className="mt-10 grid gap-8 lg:grid-cols-[230px_1fr]">
+        <aside className="ep-card flex h-fit flex-row flex-wrap gap-2 p-3 text-sm lg:sticky lg:top-28 lg:flex-col">
           {NAV.map((n) => (
-            <Link key={n.href} href={n.href} className="text-charcoal/70 transition hover:text-clay">{n.label}</Link>
+            <Link key={n.href} href={n.href} className="flex min-h-11 items-center rounded-full px-4 font-bold text-charcoal/65 transition hover:bg-bone hover:text-charcoal">{n.label}</Link>
           ))}
           <div className="pt-3"><SignOutButton /></div>
         </aside>
-        <div>{children}</div>
+        <div className="ep-card min-w-0 p-5 md:p-8">{children}</div>
+      </div>
       </div>
     </main>
   );

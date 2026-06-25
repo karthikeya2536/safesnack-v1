@@ -66,12 +66,12 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
         required
       />
 
-      {error && <p className="text-sm text-clay">{error}</p>}
-      {notice && <p className="text-sm text-forest">{notice}</p>}
+      {error && <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">{error}</p>}
+      {notice && <p className="rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-800">{notice}</p>}
 
       <button
         disabled={loading}
-        className="w-full rounded-full bg-forest px-6 py-3 text-bone transition hover:bg-charcoal disabled:opacity-60"
+        className="btn-primary w-full disabled:opacity-60"
       >
         {loading ? "Please wait…" : mode === "signup" ? "Create account" : "Sign in"}
       </button>
@@ -95,14 +95,14 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="text-sm text-charcoal/70">{label}</span>
+      <span className="text-sm font-bold text-charcoal/70">{label}</span>
       <input
         type={type}
         value={value}
         required={required}
         autoComplete={autoComplete}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-1 w-full rounded-xl border border-charcoal/20 px-4 py-3 outline-none transition focus:border-forest"
+        className="mt-2 w-full px-4"
       />
     </label>
   );

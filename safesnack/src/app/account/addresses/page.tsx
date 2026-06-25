@@ -8,7 +8,7 @@ export default async function AddressesPage() {
 
   return (
     <section>
-      <h2 className="font-serif text-2xl text-forest">Addresses</h2>
+      <h2 className="text-3xl font-bold">Addresses</h2>
       <div className="mt-6">
         <AddressManager userId={user!.id} initial={data ?? []} />
       </div>

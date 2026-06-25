@@ -103,10 +103,10 @@ export function CheckoutClient({ addresses, zones, pointsBalance }: { addresses:
     );
 
   return (
-    <div className="mt-10 grid gap-10 md:grid-cols-[1fr_320px]">
+    <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_380px]">
       {/* Address */}
       <section>
-        <h2 className="font-serif text-2xl text-forest">Delivery address</h2>
+        <h2 className="text-2xl font-bold">Delivery address</h2>
         {addresses.length === 0 ? (
           <p className="mt-3 text-sm text-charcoal/60">
             No saved address. <Link href="/account/addresses" className="text-clay hover:underline">Add one</Link> to continue.
@@ -114,9 +114,9 @@ export function CheckoutClient({ addresses, zones, pointsBalance }: { addresses:
         ) : (
           <div className="mt-4 space-y-3">
             {addresses.map((a) => (
-              <label key={a.id} className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 text-sm transition ${addressId === a.id ? "border-forest bg-sage/30" : "border-charcoal/15"}`}>
+              <label key={a.id} className={`flex min-h-16 cursor-pointer items-start gap-3 rounded-2xl border bg-white p-4 text-sm transition ${addressId === a.id ? "border-clay ring-4 ring-clay/10" : "border-charcoal/10"}`}>
                 <input type="radio" name="addr" checked={addressId === a.id} onChange={() => setAddressId(a.id)} className="mt-1" />
-                <span>{a.line1}{a.line2 ? `, ${a.line2}` : ""}, {a.city} — {a.pincode}</span>
+                <span>{a.line1}{a.line2 ? `, ${a.line2}` : ""}, {a.city} - {a.pincode}</span>
               </label>
             ))}
             <Link href="/account/addresses" className="inline-block text-sm text-clay hover:underline">+ Add another address</Link>
@@ -127,13 +127,13 @@ export function CheckoutClient({ addresses, zones, pointsBalance }: { addresses:
           <p className="mt-4 rounded-lg bg-clay/10 px-4 py-3 text-sm text-clay">We don&apos;t deliver to {address.pincode} yet.</p>
         )}
         {zone && (
-          <p className="mt-4 text-sm text-charcoal/60">Delivers to {zone.area} · ~{zone.eta_minutes} min · fee {inr(zone.delivery_fee)} · min {inr(zone.min_order)}</p>
+          <p className="mt-4 text-sm text-charcoal/60">Delivers to {zone.area} • about {zone.eta_minutes} min • fee {inr(zone.delivery_fee)} • min {inr(zone.min_order)}</p>
         )}
       </section>
 
       {/* Summary */}
-      <aside className="h-fit rounded-2xl border border-charcoal/10 p-6">
-        <h2 className="font-serif text-xl text-forest">Order summary</h2>
+      <aside className="ep-card h-fit p-6 lg:sticky lg:top-28">
+        <h2 className="text-xl font-bold">Order summary</h2>
         <ul className="mt-4 space-y-2 text-sm">
           {lines.map((l) => (
             <li key={l.variantId} className="flex justify-between">
@@ -168,7 +168,7 @@ export function CheckoutClient({ addresses, zones, pointsBalance }: { addresses:
         {error && <p className="mt-4 text-sm text-clay" role="alert">{error}</p>}
 
         <button onClick={pay} disabled={loading || !address || !zone}
-          className="mt-5 w-full rounded-full bg-forest px-6 py-3 text-bone transition hover:bg-charcoal disabled:opacity-60">
+          className="btn-primary mt-5 w-full disabled:opacity-60">
           {loading ? "Processing…" : "Pay with Razorpay"}
         </button>
         <p className="mt-2 text-center text-xs text-charcoal/40">Final total incl. delivery &amp; discount shown on the payment screen.</p>

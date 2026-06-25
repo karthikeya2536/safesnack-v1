@@ -17,7 +17,7 @@ export default async function WishlistPage() {
 
   return (
     <section>
-      <h2 className="font-serif text-2xl text-forest">Wishlist</h2>
+      <h2 className="text-3xl font-bold">Wishlist</h2>
       {items.length === 0 ? (
         <p className="mt-3 text-sm text-charcoal/60">Nothing saved yet. <Link href="/products" className="text-clay hover:underline">Browse snacks</Link>.</p>
       ) : (

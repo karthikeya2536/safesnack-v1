@@ -36,7 +36,7 @@ export function WishlistButton({ productId }: { productId: string }) {
 
   return (
     <button onClick={toggle} disabled={!ready} aria-pressed={saved}
-      className="mt-4 inline-flex items-center gap-2 rounded-full border border-charcoal/20 px-5 py-2.5 text-sm transition hover:border-clay disabled:opacity-50">
+      className="btn-secondary mt-3 w-full gap-2 px-5 text-sm disabled:opacity-50">
       <span className={saved ? "text-clay" : "text-charcoal/40"}>{saved ? "♥" : "♡"}</span>
       {saved ? "Saved to wishlist" : "Save to wishlist"}
     </button>

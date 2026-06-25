@@ -1,4 +1,5 @@
-import { createClient } from "@/lib/supabase/server";
+import { publicClient } from "@/lib/supabase/public";
+import { cache } from "react";
 
 export type Variant = { id: string; label: string; price: number; compare_at_price: number | null; sku: string | null };
 export type ProductImage = { url: string; type: string; sort_order: number };
@@ -18,41 +19,41 @@ const PRODUCT_SELECT =
   "brand:brand_id(name,slug,is_house_brand),category:category_id(name,slug)," +
   "variant(id,label,price,compare_at_price,sku),product_image(url,type,sort_order)";
 
-export async function getProducts(opts: { category?: string; tag?: string; sort?: string } = {}) {
-  const sb = await createClient();
+export const getProducts = cache(async function getProducts(opts: { category?: string; tag?: string; sort?: string } = {}) {
+  const sb = publicClient();
   let q = sb.from("product").select(PRODUCT_SELECT).eq("is_active", true).order("name");
   if (opts.tag) q = q.contains("dietary_tags", [opts.tag]);
   const { data } = await q;
   let rows = (data ?? []) as unknown as Product[];
   if (opts.category) rows = rows.filter((p) => p.category?.slug === opts.category);
   return rows;
-}
+});
 
-export async function getProductBySlug(slug: string) {
-  const sb = await createClient();
+export const getProductBySlug = cache(async function getProductBySlug(slug: string) {
+  const sb = publicClient();
   const { data } = await sb.from("product").select(PRODUCT_SELECT).eq("slug", slug).single();
   return (data as unknown as Product) ?? null;
-}
+});
 
 export async function getOriginals() {
   const all = await getProducts();
   return all.filter((p) => p.brand?.is_house_brand);
 }
 
-export async function getBundles() {
-  const sb = await createClient();
+export const getBundles = cache(async function getBundles() {
+  const sb = publicClient();
   const { data } = await sb.from("bundle").select("id,name,slug,description,price").eq("is_active", true);
   return (data ?? []) as Bundle[];
-}
+});
 
-export async function getCategories() {
-  const sb = await createClient();
+export const getCategories = cache(async function getCategories() {
+  const sb = publicClient();
   const { data } = await sb.from("category").select("name,slug").order("name");
   return (data ?? []) as { name: string; slug: string }[];
-}
+});
 
-export async function searchProducts(term: string) {
-  const sb = await createClient();
+export const searchProducts = cache(async function searchProducts(term: string) {
+  const sb = publicClient();
   const t = term.trim();
   if (!t) return [];
   // search name, description, ingredients, and dietary tags (health objective)
@@ -66,7 +67,7 @@ export async function searchProducts(term: string) {
   const byTag = rows.length ? rows : [];
   await sb.from("search_query").insert({ query: t, results_count: byTag.length });
   return rows;
-}
+});
 
 export function priceFrom(p: Product) {
   const prices = p.variant.map((v) => v.price);

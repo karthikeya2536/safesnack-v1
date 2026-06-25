@@ -10,15 +10,15 @@ export default async function ReferralsPage() {
 
   return (
     <section>
-      <h2 className="font-serif text-2xl text-forest">Refer &amp; Earn</h2>
-      <p className="mt-2 text-sm text-charcoal/60">Share your code. Friends get a welcome treat — you earn 100 points when their first order ships.</p>
+      <h2 className="text-3xl font-bold">Refer &amp; Earn</h2>
+      <p className="mt-2 text-sm text-charcoal/60">Share your code. Friends get a welcome treat, and you earn 100 points when their first order ships.</p>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-2xl border border-charcoal/10 bg-sage/30 px-6 py-5">
+        <div className="rounded-2xl border border-charcoal/10 bg-bone px-6 py-5">
           <span className="text-xs uppercase tracking-widest text-charcoal/50">Your code</span>
           <p className="mt-2 font-serif text-2xl text-forest">{profile?.referral_code}</p>
         </div>
-        <div className="rounded-2xl border border-charcoal/10 px-6 py-5">
+        <div className="rounded-2xl border border-charcoal/10 bg-white px-6 py-5">
           <span className="text-xs uppercase tracking-widest text-charcoal/50">Points balance</span>
           <p className="mt-2 font-serif text-2xl text-forest tabular-nums">{balance}</p>
           <p className="mt-1 text-xs text-charcoal/40">1 point = ₹1 at checkout</p>

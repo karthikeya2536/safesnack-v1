@@ -27,7 +27,7 @@ export function ReviewForm({ productId }: { productId: string }) {
     router.refresh();
   }
 
-  if (done) return <p className="text-sm text-forest">Thanks for your review!</p>;
+  if (done) return <p className="rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-800">Thanks for your review.</p>;
 
   return (
     <form onSubmit={submit} className="max-w-md space-y-3">
@@ -37,13 +37,15 @@ export function ReviewForm({ productId }: { productId: string }) {
             className={`text-2xl transition ${n <= rating ? "text-clay" : "text-charcoal/25"}`}>★</button>
         ))}
       </div>
-      <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title (optional)"
-        className="w-full rounded-xl border border-charcoal/20 px-4 py-2.5 outline-none focus:border-forest" />
-      <textarea value={body} onChange={(e) => setBody(e.target.value)} rows={3} placeholder="Share your thoughts…"
-        className="w-full rounded-xl border border-charcoal/20 px-4 py-2.5 outline-none focus:border-forest" />
-      {error && <p className="text-sm text-clay">{error}</p>}
-      <button disabled={saving} className="rounded-full bg-forest px-6 py-2.5 text-bone transition hover:bg-charcoal disabled:opacity-60">
-        {saving ? "Submitting…" : "Submit review"}
+      <label className="block"><span className="text-sm font-bold">Title</span>
+        <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Optional" className="mt-2 w-full px-4" />
+      </label>
+      <label className="block"><span className="text-sm font-bold">Review</span>
+        <textarea value={body} onChange={(e) => setBody(e.target.value)} rows={4} placeholder="Share your thoughts" className="mt-2 w-full px-4 py-3" />
+      </label>
+      {error && <p className="text-sm text-red-700" role="alert">{error}</p>}
+      <button disabled={saving} className="btn-primary px-6 disabled:opacity-60">
+        {saving ? "Submitting..." : "Submit review"}
       </button>
     </form>
   );

@@ -13,14 +13,14 @@ export default async function OrdersPage() {
 
   return (
     <section>
-      <h2 className="font-serif text-2xl text-forest">Orders</h2>
+      <h2 className="text-3xl font-bold">Orders</h2>
       {!orders || orders.length === 0 ? (
         <p className="mt-3 text-sm text-charcoal/60">No orders yet. <Link href="/products" className="text-clay hover:underline">Start shopping</Link>.</p>
       ) : (
-        <ul className="mt-6 divide-y divide-charcoal/10">
+        <ul className="mt-6 space-y-3">
           {orders.map((o) => (
             <li key={o.id}>
-              <Link href={`/account/orders/${o.id}`} className="flex items-center justify-between py-4 transition hover:text-clay">
+              <Link href={`/account/orders/${o.id}`} className="flex min-h-16 flex-col justify-between gap-3 rounded-2xl border border-charcoal/10 bg-bone p-4 transition hover:border-clay sm:flex-row sm:items-center">
                 <span>
                   <span className="font-mono text-xs text-charcoal/50">#{o.id.slice(0, 8)}</span>
                   <span className="ml-3 text-sm">{new Date(o.created_at).toLocaleDateString("en-IN")}</span>

@@ -13,16 +13,16 @@ const NAV = [
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   await requireRole(["ADMIN"]);
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12">
-      <div className="grid gap-10 md:grid-cols-[180px_1fr]">
-        <aside className="flex flex-col gap-3 text-sm">
-          <p className="font-serif text-lg text-forest">Admin</p>
+    <div className="ep-page">
+      <div className="grid gap-8 lg:grid-cols-[210px_1fr]">
+        <aside className="ep-card flex h-fit flex-row flex-wrap gap-1 p-3 text-sm lg:sticky lg:top-28 lg:flex-col">
+          <p className="px-4 py-3 text-lg font-extrabold">Admin</p>
           {NAV.map((n) => (
-            <Link key={n.href} href={n.href} className="text-charcoal/70 transition hover:text-clay">{n.label}</Link>
+            <Link key={n.href} href={n.href} className="flex min-h-11 items-center rounded-xl px-4 font-bold text-charcoal/65 transition hover:bg-bone hover:text-charcoal">{n.label}</Link>
           ))}
           <div className="pt-3"><SignOutButton /></div>
         </aside>
-        <main>{children}</main>
+        <main className="ep-card min-w-0 overflow-hidden p-5 md:p-8">{children}</main>
       </div>
     </div>
   );
