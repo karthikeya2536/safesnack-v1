@@ -3,6 +3,8 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const PROTECTED = ["/account", "/admin", "/staff"];
 
+export const runtime = "nodejs";
+
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
 
